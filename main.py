@@ -25,6 +25,12 @@ class Game(arcade.Window):
             bird = Bird(i, 400)
             self.bird_list.append(bird)
 
+        self.cloud = arcade.Sprite("image\cloud.jpg")
+        self.cloud.center_x = 900
+        self.cloud.center_y = 130
+        self.cloud.width = 50
+        self.cloud.height = 50
+        
         self.physics_engine = arcade.PhysicsEnginePlatformer( self.dino,self.ground_list, self.gravity)
 
 def on_draw(self, w, h):
@@ -33,7 +39,8 @@ def on_draw(self, w, h):
 
     self.dino.draw()
     self.bird.draw()
-
+    self.cloud.draw()
+    
     for ground in self.ground_list:
             ground.draw()   
     
@@ -45,10 +52,7 @@ def on_update(self,delta_time:float):
     self.physics_engine.update()
 
     for ground in self.ground_list:
-            if ground.center_x<0:
-                self.ground_list.remove(ground)
-                gr = Ground(self.w-64 ,100)
-                self.ground_list.append(gr)
+            ground.update()
 
     for bird in self.bird_list:
             bird.update()
