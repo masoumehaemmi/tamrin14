@@ -31,6 +31,12 @@ class Game(arcade.Window):
         self.cloud.width = 50
         self.cloud.height = 50
         
+        self.kaktos = arcade.Sprite("image\kak g.jpg")
+        self.kaktos.center_x = 30
+        self.kaktos.center_y = 100
+        self.kaktos.width = 50
+        self.kaktos.height = 50
+
         self.physics_engine = arcade.PhysicsEnginePlatformer( self.dino,self.ground_list, self.gravity)
 
 def on_draw(self, w, h):
@@ -40,7 +46,7 @@ def on_draw(self, w, h):
     self.dino.draw()
     self.bird.draw()
     self.cloud.draw()
-    
+    self.kaktos.draw
     for ground in self.ground_list:
             ground.draw()   
     
