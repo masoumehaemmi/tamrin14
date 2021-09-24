@@ -39,33 +39,33 @@ class Game(arcade.Window):
 
         self.physics_engine = arcade.PhysicsEnginePlatformer( self.dino,self.ground_list, self.gravity)
 
-def on_draw(self, w, h):
-    arcade.start_render()
-    arcade.draw_lrwh_rectangle_textured(self.w,self.h,self.color)
+    def on_draw(self):
+        arcade.start_render()
+        arcade.draw_lrwh_rectangle_textured(self.w,self.h,self.color)
 
-    self.dino.draw()
-    self.bird.draw()
-    self.cloud.draw()
-    self.kaktos.draw
-    for ground in self.ground_list:
-            ground.draw()   
-    
-    for bird in self.bird_list:
-            bird.draw()
+        self.dino.draw()
+        self.bird.draw()
+        self.cloud.draw()
+        self.kaktos.draw
+        for ground in self.ground_list:
+                ground.draw()   
+        
+        for bird in self.bird_list:
+                bird.draw()
 
-def on_update(self,delta_time:float):
+    def on_update(self,delta_time:float):
 
-    self.physics_engine.update()
+        self.physics_engine.update()
 
-    for ground in self.ground_list:
-            ground.update()
+        for ground in self.ground_list:
+                ground.update()
 
-    for bird in self.bird_list:
-            bird.update()
+        for bird in self.bird_list:
+                bird.update()
 
-def on_key_press(self, key, modifiers):
-    if key == arcade.key.RIGHT:
-        self.ground.change_x = 1
+    def on_key_press(self, key, modifiers):
+        if key == arcade.key.RIGHT:
+            self.ground.change_x = 1
 
 game= Game()
 arcade.run()
