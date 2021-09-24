@@ -5,8 +5,8 @@ class Ground(arcade.AnimatedWalkingSprite):
         super().__init__()
 
         self.walk_left_textures = [arcade.load_texture("image\ground0.jpg"),
-                                   arcade.load_texture("image\ground1.jpg1"),
-                                   arcade.load_texture("image\ground2.jpg2")]
+                                   arcade.load_texture("image\ground1.jpg"),
+                                   arcade.load_texture("image\ground2.jpg")]
         self.center_x = width
         self.center_y = height
 
