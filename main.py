@@ -13,21 +13,18 @@ class Game(arcade.Window):
         self.gravity = 0.5
         super().__init__(self.w,self.h, "T_Rex Game Saeideh")
         
-        self.background_image_day = arcade.load_texture("image\disert d.jpg")
+        # self.background_image_day = arcade.load_texture("image\disert d.jpg")
         self.background_image_night = arcade.load_texture("image\disert n.jpg")
+        self.background_time = time.time()
         
-        self.day = True
+        self.night = True
+        
         self.ground_list = arcade.SpriteList()
+        self.ground_list.append(Ground())
         self.dino = Dino(self.width ,self.height)
-
-        self.t1 = time.time()
-        for i in range(self.w, self.h):
-            ground = Ground(i ,100)
-            for ground in self.ground_list:
-                ground.change_x = 1
-                self.ground_list.append(ground)
         
         self.bird_speed = -5
+        self.startplay_time = time.time()
 
         self.bird_list = arcade.SpriteList()
         
@@ -50,8 +47,16 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer( self.dino,self.ground_list, self.gravity)
 
     def on_draw(self):
+        self.t1 = time.time()
+
         arcade.start_render()
-        arcade.draw_lrwh_rectangle_textured(0, 0,self.w,self.h,self.background_image_night)
+
+        if self.night == False:
+            arcade.draw_lrwh_rectangle_textured(0, 0, self.w, self.h, self.background_image_day)
+        else:
+                
+             arcade.draw_lrwh_rectangle_textured(0, 0, self.w, self.h, self.background_image_night)
+
 
         arcade.draw_text(f"score: {self.dino.score}", 850, 450, arcade.color.WHITE, 30)
         
@@ -66,6 +71,7 @@ class Game(arcade.Window):
         
         for bird in self.bird_list:
             if self.dino.score > 1000:
+
                 bird.draw()
 
     def on_update(self,delta_time:float):
@@ -73,30 +79,41 @@ class Game(arcade.Window):
 
         self.physics_engine.update()
 
+        if self.startplay_time == 1:
+            if self.t2 - self.background_time >20 and self.night == True:
+                self.background_image_day = arcade.load_texture("image\disert d.jpg")
+                self.night = False
+                self.background_time = time.time()
+        
         for ground in self.ground_list:
                 ground.update_animation()
+                ground.update()
+                if ground.center_x < 200:
+                    self.ground_list.remove(ground)
+                    self.ground_list.append(Ground())
 
         for bird in self.bird_list:
-                bird.update_animation()
+            bird.update_animation()
+            bird.update()
 
-        r = random.randint(self.t1 , self.t2)
+        # r = random.randint(self.t1 , self.t2)
 
-        if r in 
+        # if r in 
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.RIGHT:
-            self.ground.change_x = 1 *self.ground.speed
+            self.startplay_time = 1
 
-        elif key == arcade.key.UP:
+        if key == arcade.key.UP:
             if self.physics_engine.can_jump():
                 self.dino.change_y = 10
                 self.dino.score += 1
 
         if key == arcade.key.DOWN:
-            self.dino.texture = arcade.load_texture('')        
+            self.dino.texture = arcade.load_texture('')       
 
     def on_key_release(self, key, modifiers):
-            self.ground.change_x = 0
+            pass
 
 game= Game()
 arcade.run()
